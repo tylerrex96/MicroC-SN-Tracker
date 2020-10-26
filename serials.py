@@ -1,15 +1,15 @@
 import tkinter as tk
 from datetime import datetime
 from time import sleep
-#import RPI.GPIO as io
-#io.setmode(io.BCM)
-#io.setup(4,io.OUT)
+import RPI.GPIO as io
+io.setmode(io.BCM)
+io.setup(4,io.OUT)
 
 
 
 def read_file():  #delete old text entry, read the file and post the up to date list
     serials_file.delete("1.0", tk.END)
-    with open("C:/Users/shado/Downloads/Serials.txt", "r") as f:
+    with open("Serials.txt", "r") as f:
         a = f.read()
         f.close()
     serials_file.insert(tk.END, a)
@@ -20,20 +20,20 @@ def save_serial():
     serial_number = serial_entry.get()
     if serial_number[0] == "S" and len(serial_number) == 13:   #validate the S/N
         now = datetime.now()   #store file in memory, write new line at top, restore rest of file. PITA way to prepend
-        with open("C:/Users/shado/Downloads/Serials.txt","r+") as f:
+        with open("Serials.txt","r+") as f:
             a = f.read()
-            with open("C:/Users/shado/Downloads/Serials.txt", "w+") as f:
+            with open("Serials.txt", "w+") as f:
                 f.write("Serial number: " + serial_number + now.strftime(" %m/%d/%Y, %H:%M:%S \n" + a))   #save S/N with time and date
         read_file()
         invalid.config(text="Success!")
     else:
         invalid.config(text="**Error! Invalid S/N.")
-        """#io.output(4,1)
+        io.output(4,1)
         sleep(1)
-        #io.output(4,0)"""
+        io.output(4,0)
 
 
-#io.output(4,0)
+io.output(4,0)
 window = tk.Tk()
 window.title("Serial Number Logging")
 
