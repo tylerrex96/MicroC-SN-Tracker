@@ -18,6 +18,7 @@ def read_file():  #delete old text entry, read the file and post the up to date 
 
 def save_serial():
     serial_number = serial_entry.get()
+    serial_number = serial_number.upper()
     if serial_number[0] == "S" and len(serial_number) == 13:   #validate the S/N
         now = datetime.now()   #store file in memory, write new line at top, restore rest of file. PITA way to prepend
         with open("Serials.txt","r+") as f:
