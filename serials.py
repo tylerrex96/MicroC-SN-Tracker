@@ -1,7 +1,7 @@
 import tkinter as tk
 from datetime import datetime
 from time import sleep
-import RPI.GPIO as io
+import RPi.GPIO as io
 io.setmode(io.BCM)
 io.setup(4,io.OUT)
 
@@ -26,13 +26,16 @@ def save_serial():
                 f.write("Serial number: " + serial_number + now.strftime(" %m/%d/%Y, %H:%M:%S \n" + a))   #save S/N with time and date
         read_file()
         invalid.config(text="Success!")
+        serial_entry.delete(0, 'end')
     else:
         invalid.config(text="**Error! Invalid S/N.")
+        serial_entry.delete(0, 'end')
         io.output(4,1)
         sleep(1)
         io.output(4,0)
+        serial_entry.delete(0, 'end')
 
-
+text_file = open('Serials.txt', 'a')
 io.output(4,0)
 window = tk.Tk()
 window.title("Serial Number Logging")
