@@ -8,17 +8,18 @@ io.setup(4,io.OUT)
 
 
 def read_file():  #delete old text entry, read the file and post the up to date list
+    serials_file.configure(state="normal")
     serials_file.delete("1.0", tk.END)
     with open("Serials.txt", "r") as f:
         a = f.read()
         f.close()
     serials_file.insert(tk.END, a)
+    serials_file.configure(state="disabled")
     invalid.config(text="Waiting for input.")
 
 
 def save_serial():
-    serial_number = serial_entry.get()
-    serial_number = serial_number.upper()
+    serial_number = serial_entry.get().upper()
     if serial_number[0] == "S" and len(serial_number) == 13:   #validate the S/N
         now = datetime.now()   #store file in memory, write new line at top, restore rest of file. PITA way to prepend
         with open("Serials.txt","r+") as f:
@@ -56,7 +57,7 @@ serials_file = tk.Text(listframe, width=50, height=50, font=("Helvetica"))
 
 read_file()  #auto-populating the readout
 
-
+#and pack it all
 submitframe.pack(side="left", pady=25, padx=25, fill="both")
 listframe.pack(side="right", pady=25, padx=25, fill="both")
 invalid.pack(side="top", pady=10)
